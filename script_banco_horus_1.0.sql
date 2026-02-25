@@ -53,61 +53,43 @@ CONSTRAINT fk_papel_registro
 );
 
 
-CREATE TABLE Datacenter (
-idDatacenter INT AUTO_INCREMENT,
-fk_empresa INT,
-qtd_comp INT,
-data_instalacao DATE,
-fk_localizacao INT,
-CONSTRAINT pk_datacenter_empresa
-	PRIMARY KEY(idDatacenter, fk_empresa),
-CONSTRAINT fk_empresa_registro_datacenter
-	FOREIGN KEY (fk_empresa)
-		REFERENCES Empresa(idEmpresa),
-CONSTRAINT fk_localizacao_registro_datacenter
-	FOREIGN KEY (fk_localizacao)
-		REFERENCES Localizacao (idLocalizacao)
- );
+CREATE TABLE Componentes (
+idComponentes INT PRIMARY KEY AUTO_INCREMENT,
+modelo_servidor VARCHAR(45),
+so_servidor VARCHAR(45),
+qtd_ram INT,
+qtd_nucleos_cpu INT,
+qtd_disco INT
+);
+
+
+
  
  
  CREATE TABLE Servidor (
- idServidor INT AUTO_INCREMENT,
- fk_datacenter INT,
- so VARCHAR(45),
- modelo_servidor VARCHAR(45),
- qtd_ram INT, 
- qtd_disc INT,
- modelo_cpu VARCHAR(45),
- CONSTRAINT pk_servidor_datacenter
-	PRIMARY KEY (idServidor, fk_datacenter),
- CONSTRAINT fk_datacenter_registro
-	FOREIGN KEY (fk_datacenter)
-		REFERENCES Datacenter(idDatacenter)
+idServidor INT AUTO_INCREMENT,
+data_instalacao DATE,
+fk_empresa INT,
+fk_componentes INT,
+CONSTRAINT pk_servidor_empresa
+	PRIMARY KEY (idServidor, fk_empresa),
+CONSTRAINT fk_empresa_registro_servidor 
+	FOREIGN KEY (fk_empresa)
+		REFERENCES Empresa(idEmpresa),
+CONSTRAINT fk_componentes_registro_servidor
+	FOREIGN KEY (fk_componentes)
+		REFERENCES Componentes(idComponentes)
 );
 
-CREATE TABLE Log_medicao (
-idMedicao INT AUTO_INCREMENT,
-fk_servidor INT, 
-cpu_atual DECIMAL(4,2) NOT NULL,
-ram_atual DECIMAL(4,2) NOT NULL,
-disco_atual DECIMAL(4,2) NOT NULL,
-time_log DATETIME DEFAULT CURRENT_TIMESTAMP, 
-CONSTRAINT pk_servidor_medicao
-	PRIMARY KEY (idMedicao, fk_servidor),
-CONSTRAINT fk_servidor_registro
-	FOREIGN KEY (fk_servidor)
-		REFERENCES Servidor (idServidor)
-);
+
 
 
 CREATE TABLE Alerta (
-idAlerta INT AUTO_INCREMENT,
-fk_logmedicao INT, 
+idAlerta INT PRIMARY KEY AUTO_INCREMENT,
 data_alerta DATETIME DEFAULT CURRENT_TIMESTAMP, 
 criticidade VARCHAR(45), 
-CONSTRAINT pk_alerta_logmedicao
-	PRIMARY KEY (idAlerta, fk_logmedicao),
-CONSTRAINT fk_logmedicao_registro
-	FOREIGN KEY (fk_logmedicao)
-		REFERENCES Log_medicao (idMedicao)
+fk_componentes INT,
+CONSTRAINT fk_componentes_registro
+	FOREIGN KEY (fk_componentes)
+		REFERENCES Componentes(idComponentes)
 ); 
