@@ -68,7 +68,7 @@ CONSTRAINT pk_funcionario_papel_empresa
 CONSTRAINT fk_papel_registro
 	FOREIGN KEY (fk_papel_empresa)
 		REFERENCES Papel(idPapel),
-foto VARCHAR(255)
+imagem VARCHAR(255)
 );
 
 
