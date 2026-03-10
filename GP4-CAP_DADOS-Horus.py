@@ -32,7 +32,7 @@ with open(arquivo_csv, 'a', newline='') as csvfile:
 
         print(f"Escrevendo dados: \n CPU: {cpu_usage}\n RAM_TOTAL: {ram.total} : RAM_USADA: {ram.used} : RAM_PORCENTAGEM: {ram.percent}\n DISCO_TOTAL: {disk.total} : DISCO_USADA: {disk.used} : DISCO_PORCENTAGEM: {disk.percent}\n DATA_HORA: {tempo_agora}")
         print()
-        dados_dict =  {'USER': 'GABRIEL M.R','CPU': cpu_usage, 'RAM_TOTAL': ram.total, 'RAM_USADA': ram.used, 'RAM_PERCENT': ram.percent, 'DISCO_TOTAL': disk.total,'DISCO_USADO': disk.used, 'DISCO_PERCENT': disk.percent, 'DATA_HORA': tempo_agora}
+        dados_dict =  {'USER': 'MATHEUS','CPU': cpu_usage, 'RAM_TOTAL': ram.total, 'RAM_USADA': ram.used, 'RAM_PERCENT': ram.percent, 'DISCO_TOTAL': disk.total,'DISCO_USADO': disk.used, 'DISCO_PERCENT': disk.percent, 'DATA_HORA': tempo_agora}
 
         CSV_DIC_WRITER.writerow(dados_dict)
         csvfile.flush()

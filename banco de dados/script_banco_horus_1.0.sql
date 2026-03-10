@@ -7,7 +7,7 @@ CREATE TABLE Contato_inicial (
 idContato_inicial INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45),
 sobrenome VARCHAR(45),
-emaill VARCHAR(45),
+email VARCHAR(45),
 mensagem VARCHAR(255)
 ); 
 
