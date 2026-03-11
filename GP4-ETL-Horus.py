@@ -1,7 +1,5 @@
-import psutil
 import pandas as pd
 from datetime import timedelta
-import json
 import time 
 import csv
 
@@ -12,24 +10,16 @@ while True:
 
 
     dados_brutos = pd.read_csv(caminho_csv, sep=';')
-
-
-
-
     dados_brutos['DATA_HORA'] = pd.to_datetime(dados_brutos['DATA_HORA'])
 
+    # Indentificando o horario de 5 minutos atras (Tempo agora - 5 minutos)
     limite_tempo = pd.Timestamp.now() - timedelta(minutes=5)
-
-
-
-
+    # Quantidade de linhas menos o zero (Header)
     qtd_linha_atual = len(dados_brutos) - 1
-
 
     # criando as variaveis pico calcular a média
     mediaram = 0
     mediadisco = 0 
-
     mediapercentram = 0
     mediapercentcpu = 0
     mediapercentdisco = 0 
@@ -59,7 +49,6 @@ while True:
             cont_linhas_soma = cont_linhas_soma + 1
         
             # pegando os picos do uso de ram
-
             momento_atual_uso_ram = dados_brutos['RAM_USADA'][qtd_linha_atual]
             momento_atual_percent_ram = dados_brutos['RAM_PERCENT'][qtd_linha_atual]
 
@@ -88,11 +77,17 @@ while True:
             if momento_atual_percent_cpu > picopercentcpu:
                 picopercentcpu = momento_atual_percent_cpu
 
+        else:
+            break
          
         
         qtd_linha_atual -= 1
 
     
+
+    if(cont_linhas_soma == 0):
+        print("Nenhum dado encontrado a 5 minutos atrás")
+        break
 
     # deixando as médias que estão em byte para gb
 
@@ -153,7 +148,7 @@ while True:
     
         CSV_DIC_WRITER.writerow(escrita_dados)
         csvfile.flush()
-    time.sleep(150)
+    time.sleep(10)
 
     
 
